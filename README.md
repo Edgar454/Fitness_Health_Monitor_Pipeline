@@ -144,11 +144,9 @@ Custom alerts can notify you via email (SMTP) when:
 ## 📁 Project Structure
 
 ```
-.
-├── airflow/                # DAGs, plugins, and config for Airflow
 ├── dags/                   # Python DAG definition
-├── data/                   # Sample or fetched data
-├── notebooks/              # Jupyter notebooks for EDA
+   ├── fitness_api_etl/                   # Contains data fetchning a validation course
+      ├── data/                   # Sample or fetched data
 ├── docker-compose.yml      # Docker configuration
 ├── cloud.sh                # Script to set up cloud VM
 ├── .env                    # Environment variables (not committed)
@@ -173,5 +171,5 @@ Custom alerts can notify you via email (SMTP) when:
 
 Have questions or want to collaborate?
 
-**[Your Name]** – [[your.email@example.com](mailto:your.email@example.com)]\
-GitHub: [@yourusername](https://github.com/yourusername)
+**[Edgar Meva'a]** – [[mevaed4@mail.com](mailto:mevaed4@mail.com)]\
+
