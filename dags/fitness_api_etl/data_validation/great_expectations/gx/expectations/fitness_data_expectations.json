@@ -1,0 +1,305 @@
+{
+  "expectations": [
+    {
+      "id": "74af6d0e-23cc-4adc-bbcf-14026549c061",
+      "kwargs": {
+        "value": 7
+      },
+      "meta": {},
+      "type": "expect_table_row_count_to_equal"
+    },
+    {
+      "id": "8294bdaf-5504-468e-be32-c8cff629c14f",
+      "kwargs": {
+        "column_set": [
+          "timestamp",
+          "active_minutes",
+          "step_count_delta",
+          "calories_expended",
+          "heart_rate_bpm",
+          "weight",
+          "blood_pressure",
+          "blood_glucose",
+          "body_temperature",
+          "distance_delta",
+          "height",
+          "sleep_segment",
+          "nutrition"
+        ],
+        "exact_match": false
+      },
+      "meta": {},
+      "type": "expect_table_columns_to_match_set"
+    },
+    {
+      "id": "bc744b12-e0e2-4e39-a6e6-446a8d9e7055",
+      "kwargs": {
+        "column": "timestamp",
+        "type_": "datetime64[ns]"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "a7fee0cd-5685-4304-8afe-f6fa832fd452",
+      "kwargs": {
+        "column": "active_minutes",
+        "type_": "int"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "5fb26c8e-bfbf-45f4-b93a-3bccebcd4def",
+      "kwargs": {
+        "column": "step_count_delta",
+        "type_": "int"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "e3062f13-5f28-4548-9353-4256b3341fb1",
+      "kwargs": {
+        "column": "calories_expended",
+        "type_": "float"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "8f7dea7d-c373-4859-b329-29279a256acf",
+      "kwargs": {
+        "column": "heart_rate_bpm",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "ba49ac9c-b882-41b1-b34b-d4871d918ffc",
+      "kwargs": {
+        "column": "weight",
+        "type_": "float"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "faa04771-3d26-4087-a8ba-1d5064e45240",
+      "kwargs": {
+        "column": "blood_pressure",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "a7ccea89-89d6-40b3-b40d-951a486c2d05",
+      "kwargs": {
+        "column": "blood_glucose",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "701e98a2-a77a-4893-93c3-fa7d536f5ae5",
+      "kwargs": {
+        "column": "body_temperature",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "9a3d9726-dea3-45f5-a59a-64188437a293",
+      "kwargs": {
+        "column": "distance_delta",
+        "type_": "float"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "b7ef80bc-cff3-43d0-bc7a-37217be0c679",
+      "kwargs": {
+        "column": "height",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "7a776b21-b1d2-48e5-a030-a3538bc09449",
+      "kwargs": {
+        "column": "sleep_segment",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "cd99602c-5284-4fac-a2c5-fca505e23877",
+      "kwargs": {
+        "column": "nutrition",
+        "type_": "float64"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "a2cfc6e7-8576-4bf0-975a-7c6a5a9d37ce",
+      "kwargs": {
+        "column": "active_minutes",
+        "max_value": 1440.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "4a32f403-1e23-4563-8bca-8eb900ab5b85",
+      "kwargs": {
+        "column": "step_count_delta",
+        "max_value": 50000.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "854f1784-a6f6-41d8-bddf-ab929b86a824",
+      "kwargs": {
+        "column": "calories_expended",
+        "max_value": 4000.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "aafc747d-d4df-4f68-954c-86213f1c7cbb",
+      "kwargs": {
+        "column": "weight",
+        "max_value": 200.0,
+        "min_value": 20.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "8b47529a-d50a-4a25-ad3f-45e7d2fad089",
+      "kwargs": {
+        "column": "heart_rate_bpm",
+        "max_value": 200.0,
+        "min_value": 30.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "b16c942b-b618-4380-b9bb-580a431ee794",
+      "kwargs": {
+        "column": "body_temperature",
+        "max_value": 45.0,
+        "min_value": 30.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "813c699e-f143-4976-95ba-71c73f6dabf0",
+      "kwargs": {
+        "column": "blood_pressure",
+        "max_value": 300.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "0607e22b-66c1-4b5a-82bc-b000a3d2e8b7",
+      "kwargs": {
+        "column": "height",
+        "max_value": 2.0,
+        "min_value": 1.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "9ba8b971-458e-40a0-a281-5bf97d3eac8f",
+      "kwargs": {
+        "column": "distance_delta",
+        "max_value": 50000.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "2074eea6-5af4-4e4e-8f9c-e14af03c548b",
+      "kwargs": {
+        "column": "sleep_segment",
+        "max_value": 24.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "4ceb33b7-52be-4196-8456-e2f5034e175d",
+      "kwargs": {
+        "column": "blood_glucose",
+        "max_value": 100.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "137b5f6f-b018-400d-989a-c473c203b7fd",
+      "kwargs": {
+        "column": "blood_pressure",
+        "max_value": 180.0,
+        "min_value": 60.0
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "b679f984-a11c-4cc7-85d0-8cca57ef2d3b",
+      "kwargs": {
+        "column": "timestamp"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_unique"
+    },
+    {
+      "id": "aa97a0b7-db20-457d-a5a5-22e75f6f2d94",
+      "kwargs": {
+        "column": "height",
+        "max_value": 3.0,
+        "min_value": 0.0
+      },
+      "meta": {},
+      "type": "expect_column_unique_value_count_to_be_between"
+    },
+    {
+      "id": "d7a1f78b-236b-4bfe-8f1a-cfd3e7c63b3c",
+      "kwargs": {
+        "column": "timestamp",
+        "max_value": "2025-05-25T21:48:42.947907"
+      },
+      "meta": {},
+      "type": "expect_column_values_to_be_between"
+    }
+  ],
+  "id": "09579031-131d-4913-b19a-cbf7761859e2",
+  "meta": {
+    "great_expectations_version": "1.4.5"
+  },
+  "name": "fitness_data_expectations",
+  "notes": null
+}
