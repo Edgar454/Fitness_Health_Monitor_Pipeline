@@ -135,6 +135,8 @@ Custom alerts can notify you via email (SMTP) when:
 
 ---
 
+[grafana-image](Graphics.PNG)
+
 ## 🎥 Demo
 
 *Alternatively, add a link to a YouTube or Loom video here.*
