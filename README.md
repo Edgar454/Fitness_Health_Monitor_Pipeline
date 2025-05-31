@@ -104,17 +104,20 @@ Running locally might not be optimal due to resource constraints. You’ll need:
 
 To run in the cloud (e.g., on an **Azure VM**):
 
-1. SSH into your VM
-2. Clone this repository
+1. Clone this repository
+2. Open bash at the base and make sure you have azure cli installed
 3. Run the provisioning script:
 
 ```bash
 ./cloud.sh
 ```
+This will define the VM , open the ports and gice you your PUBLIC_IP then :
 
 4. Either:
    - Use `docker.sh` for a full setup
    - Or manually set `$AIRFLOW_HOME`, navigate to the `airflow/` folder and follow local Docker steps
+
+Head over http:/<PUBLIC_IP>:8080 to access the AIrflow UI and http:/<PUBLIC_IP>:3000 to access the grafana UI
 
 ---
 
@@ -135,7 +138,7 @@ Custom alerts can notify you via email (SMTP) when:
 
 ---
 
-[grafana-image](Graphics.PNG)
+![grafana-image](Graphics.PNG)
 
 ## 🎥 Demo
 
@@ -173,5 +176,5 @@ Custom alerts can notify you via email (SMTP) when:
 
 Have questions or want to collaborate?
 
-**[Edgar Meva'a]** – [[mevaed4@mail.com](mailto:mevaed4@mail.com)]\
+**Edgar Meva'a** – [mevaed4@mail.com](mailto:mevaed4@mail.com)
 
