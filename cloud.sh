@@ -8,12 +8,27 @@ az vm create \
   --name airflow-vm \
   --image Ubuntu2204 \
   --admin-username azureuser \
+  --size Standard_DS2_v2 \
   --generate-ssh-keys
 
 # Open required ports
-for port in 22 8080 8081 3000; do
-  az vm open-port --port $port --resource-group myResourceGroup --name airflow-vm
+START_PRIORITY=1300
+RESOURCE_GROUP="myResourceGroup"
+VM_NAME="airflow-vm"
+
+PORTS=(22 8080 8081 3000)
+
+for i in "${!PORTS[@]}"; do
+  PORT=${PORTS[$i]}
+  PRIORITY=$((START_PRIORITY + i))
+  echo "Opening port $PORT with priority $PRIORITY..."
+  az vm open-port \
+    --port $PORT \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$VM_NAME" \
+    --priority $PRIORITY
 done
+
 
 # Get public IP
 PUBLIC_IP=$(az vm show --name airflow-vm --resource-group myResourceGroup -d --query publicIps -o tsv)
