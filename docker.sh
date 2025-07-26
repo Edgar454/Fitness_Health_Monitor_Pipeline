@@ -16,7 +16,7 @@ docker --version
 docker-compose --version
 
 # Airflow setup
-echo "export AIRFLOW_HOME=/home/azureuser/airflow" >> ~/.bashrc
+echo "export AIRFLOW_HOME=/home/azureuser/fitness_monitor" >> ~/.bashrc
 source ~/.bashrc
 
 # Ensure docker-compose.yml is in $AIRFLOW_HOME

@@ -35,5 +35,5 @@ PUBLIC_IP=$(az vm show --name airflow-vm --resource-group myResourceGroup -d --q
 echo "Public IP is: $PUBLIC_IP"
 
 # SCP and SSH
-scp -r . azureuser@$PUBLIC_IP:/home/azureuser/
+scp -r . azureuser@$PUBLIC_IP:/home/azureuser/fitness_monitor/
 ssh azureuser@$PUBLIC_IP
