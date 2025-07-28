@@ -2,7 +2,7 @@ import os
 import great_expectations as gx
 from great_expectations import expectations as gxe
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta 
 from pathlib import Path
 
 airflow_home = os.environ.get("AIRFLOW_HOME")
@@ -63,7 +63,7 @@ def setup_expectations():
         timestamp_type_expectation
     )
 
-    active_minutes_type_expectation = gxe.ExpectColumnValuesToBeOfType(column="active_minutes", type_="int")
+    active_minutes_type_expectation = gxe.ExpectColumnValuesToBeOfType(column="active_minutes", type_="float")
     expectation_suite.add_expectation(
         active_minutes_type_expectation
     )
@@ -260,7 +260,7 @@ def setup_expectations():
     )
 
 
-
 if __name__ == "__main__":
     setup_expectations()
     print("Expectation suite created successfully!")
+

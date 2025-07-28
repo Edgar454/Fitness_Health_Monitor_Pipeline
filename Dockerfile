@@ -23,4 +23,4 @@ USER airflow
 
 # Install Airflow with Spark provider and Great Expectations
 ARG AIRFLOW_VERSION=3.0.1
-RUN pip install apache-airflow[apache-spark]==${AIRFLOW_VERSION} great_expectations
+RUN pip install apache-airflow[apache-spark]==${AIRFLOW_VERSION} apache-airflow-providers-slack great_expectations

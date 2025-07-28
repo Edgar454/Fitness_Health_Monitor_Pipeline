@@ -1,0 +1,73 @@
+name: Deploy the container on Azure VM
+
+on:
+  push:
+    branches: [ "main" ]
+  paths:
+      - 'Dockerfile'
+      - 'docker-compose.yaml'
+      - 'dags/**'
+
+env:
+  AZURE_RESOURCE_GROUP: myResourceGroup
+  AZURE_WEBAPP_NAME: fitness-health-monitor
+  AZURE_VM_NAME: airflowVM
+  PUBLIC_IP: 172.211.11.77
+  USERNAME: azureuser
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $PUBLIC_IP >> ~/.ssh/known_hosts
+
+      - name: Create .env file locally
+        run: |
+          cat <<EOF > .env
+# AIRFLOW RELATED VARIABLES
+AIRFLOW_UID=50000
+AIRFLOW_IMAGE_NAME=apache/airflow:3.0.1
+AIRFLOW_PROJ_DIR=.
+_AIRFLOW_WWW_USER_USERNAME=admin
+_AIRFLOW_WWW_USER_PASSWORD=admin
+
+# FITNESS API CONNECTION DETAILS
+GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+GOOGLE_REFRESH_TOKEN=${{ secrets.GOOGLE_REFRESH_TOKEN }}
+
+# GRAFANA MAILING CONFIGURATION
+GMAIL_SMTP_USER=${{ secrets.GMAIL_SMTP_USER }}
+GMAIL_SMTP_PASSWORD=${{ secrets.GMAIL_SMTP_PASSWORD }}
+
+# POSTGRES CONFIGURATION
+USER_POSTGRES_USER=postgres
+USER_POSTGRES_PASSWORD=eded404
+EOF
+
+      - name: Transfer files to Azure VM
+        run: |
+          scp -o StrictHostKeyChecking=no .env $USERNAME@$PUBLIC_IP:/home/$USERNAME/airflow/.env
+          scp -o StrictHostKeyChecking=no -r * $USERNAME@$PUBLIC_IP:/home/$USERNAME/airflow/
+
+      - name: Deploy on Azure VM using Docker Compose
+        run: |
+          ssh -o StrictHostKeyChecking=no $USERNAME@$PUBLIC_IP \
+          "cd /home/$USERNAME/airflow && docker-compose up -d --build"
+
+      - name: Verify Deployment
+        run: |
+          ssh -o StrictHostKeyChecking=no $USERNAME@$PUBLIC_IP "docker ps"
+

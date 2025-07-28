@@ -5,7 +5,7 @@ az login --use-device-code
 az group create --name myResourceGroup --location westeurope
 az vm create \
   --resource-group myResourceGroup \
-  --name airflow-vm \
+  --name airflowVM \
   --image Ubuntu2204 \
   --admin-username azureuser \
   --size Standard_DS2_v2 \
@@ -14,7 +14,7 @@ az vm create \
 # Open required ports
 START_PRIORITY=1300
 RESOURCE_GROUP="myResourceGroup"
-VM_NAME="airflow-vm"
+VM_NAME="airflowVM"
 
 PORTS=(22 8080 8081 3000)
 
@@ -31,7 +31,7 @@ done
 
 
 # Get public IP
-PUBLIC_IP=$(az vm show --name airflow-vm --resource-group myResourceGroup -d --query publicIps -o tsv)
+PUBLIC_IP=$(az vm show --name airflowVM --resource-group myResourceGroup -d --query publicIps -o tsv)
 echo "Public IP is: $PUBLIC_IP"
 
 # SCP and SSH

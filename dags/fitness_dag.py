@@ -2,6 +2,7 @@ from airflow.sdk import DAG
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
+from airflow.providers.slack.operators.slack import SlackAPIPostOperator
 from airflow.operators.empty import EmptyOperator
 
 from fitness_api_etl.get_data import get_fitness_data
@@ -9,6 +10,7 @@ from fitness_api_etl.data_validation.ge_setup import setup_expectations
 from fitness_api_etl.data_validation.run_validation import validate_fitness_data
 
 import os
+import logging
 from pathlib import Path
 from datetime import  timedelta
 from pendulum import datetime
@@ -23,17 +25,43 @@ def check_expectation_existence():
     else:
         return 'SkipStep'
 
+def task_failure_alert(context):
+    ti = context.get('task_instance').id
+    dag_name = context.get('task_instance').dag_id
+    task_name = context.get('task_instance').task_id
+    execution_date = context.get('task_instance').start_date
+    log_url = context.get('task_instance').hostname
+    dag_run = context.get('task_instance_key_str')
+
+    logging.warning("Slack alert triggered!")
+    slack_alert = SlackAPIPostOperator(
+        task_id='notify_slack_failure',
+        slack_conn_id = 'slack_default',
+        text=(
+            ":red_circle: Task Failed.\n"
+            f"*DAG*: {dag_name}\n"
+            f"*Task*: {task_name}\n"
+            f"*Execution Time*: {execution_date}\n"
+            f"*Task Instance*: {ti}\n"
+            f"*Log URL*: {log_url}\n"
+            f"*Dag Run*: {dag_run}\n"
+        ),
+        channel="#issues",
+        username="airflow-bot" )
+    return  slack_alert.execute(context=context)
+
 # Create the DAG
 with DAG("fitness_data_monitoring_dag",
             start_date=datetime(2025, 5, 23, tz='local'),
             schedule="@daily",
             catchup=False,
             tags=["fitness","portfolio"],
+	    on_failure_callback = task_failure_alert,
             default_args={
                 "owner": "airflow",
-                "start_date": datetime(2025, 5, 23, tz='local'),
                 "retries": 3,
-                "retry_delay": timedelta(minutes=5),
+                "retry_delay": timedelta(seconds=5),
+                "on_failure_callback": task_failure_alert
             },
             ) as dag:
             # Define the tasks in the DAG
@@ -56,7 +84,6 @@ with DAG("fitness_data_monitoring_dag",
                 task_id="SkipStep",
             )
 
-            
             validate_data_task = PythonOperator(
                 task_id="DataValidation",
                 python_callable=validate_fitness_data,
@@ -92,7 +119,6 @@ with DAG("fitness_data_monitoring_dag",
                 """,
             )
 
-
             transform_data_task = SparkSubmitOperator(
                 task_id="DataTransformation",
                 application= airflow_home + "/dags/fitness_api_etl/transform_and_save.py",
@@ -100,8 +126,7 @@ with DAG("fitness_data_monitoring_dag",
                 conn_id="spark_default",
             )
 
-            
 
-            fetch_data_task >> check_expectation_existence_task >> [create_expectation_suite, skip_step] >> validate_data_task >> create_table_task >> transform_data_task
+            fetch_data_task >>  check_expectation_existence_task >> [create_expectation_suite, skip_step] >> validate_data_task >> create_table_task >> transform_data_task
 
 

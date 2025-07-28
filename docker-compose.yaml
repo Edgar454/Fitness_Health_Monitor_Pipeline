@@ -14,7 +14,7 @@ x-airflow-common:
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: 0YBXIBP6WTMH-nyvvDs8fpu2B4-GDwsBF5Kgq5yoS7c=
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: False
     AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
     GOOGLE_REFRESH_TOKEN: ${GOOGLE_REFRESH_TOKEN:-.}
     GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-.}
@@ -360,10 +360,17 @@ services:
       - "3000:3000"
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     networks:
       - airflow-network
-    
+    environment:
+    - GF_SMTP_STARTTLS_POLICY=Opportunistic
+    - GF_SMTP_ENABLED=true
+    - GF_SMTP_HOST=smtp.gmail.com:587
+    - GF_SMTP_USER=${GMAIL_SMTP_USER:-}
+    - GF_SMTP_PASSWORD=${GMAIL_SMTP_PASSWORD:-}
+    - GF_SMTP_FROM_ADDRESS=${GMAIL_SMTP_USER:-}
+    - GF_SMTP_FROM_NAME=fitness_dashboard
+    - GF_SMTP_SKIP_VERIFY=true
 
 
 networks:

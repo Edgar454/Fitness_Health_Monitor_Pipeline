@@ -16,7 +16,7 @@ data_path = airflow_home + "/dags/fitness_api_etl/data"
 def run_spark_job():
 
     spark = SparkSession.builder.getOrCreate()
-    df = spark.read.csv(data_path + "/fitness_data.csv", header=True, inferSchema=True , nullValue="")
+    df = spark.read.csv(data_path + "/fitness_data.csv", header=True, inferSchema=True, nullValue="")
 
     # Add BMI column
     df = df.withColumn("BMI", when(col("height") > 0, col("weight") / col("height")**2))

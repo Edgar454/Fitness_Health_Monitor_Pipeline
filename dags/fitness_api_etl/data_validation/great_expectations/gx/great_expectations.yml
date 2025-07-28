@@ -83,15 +83,15 @@ data_docs_sites:
 fluent_datasources:
   fitness_data_source:
     type: pandas
-    id: d929dd40-6243-4dfe-b65f-262372c899dd
+    id: f8885372-e9e6-478d-9fe4-af53c419a270
     assets:
       fitness_dataframe_asset:
         type: dataframe
-        id: 5e3f1659-794e-41a2-b7c7-7a6545c854cd
+        id: 71c5a307-874e-4e43-838f-f59fb812f0a7
         batch_metadata: {}
         batch_definitions:
           batch definition:
-            id: 2d094050-211a-49db-aa88-d9c22246b121
+            id: b9aba0d4-02bc-43fc-86c8-891b8a65c086
             partitioner:
 analytics_enabled:
-data_context_id: 2f4b65c1-415e-48c1-84c8-a962263920b7
+data_context_id: a8db7850-eda7-4904-8542-df10ef9e31cd
