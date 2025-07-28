@@ -22,6 +22,7 @@ This project uses a modern data stack:
 - **Apache Spark**: Transforms and enriches raw data
 - **PostgreSQL**: Stores the transformed health metrics
 - **Grafana**: Visualizes health metrics and sends alerts
+- **Github Actions**: Deploys auyomatically the new image upon changes
 
 ---
 
@@ -131,20 +132,46 @@ Grafana dashboards show:
 - Weekly trends
 
 Custom alerts can notify you via email (SMTP) when:
+- Activity objective (more than 60min daily) drops below 3 days in the 7 last days
+- Steps objective (more than 7000 steps ) drops below 3 days in the 7 last days
+- Sleep hasn't been recorded for more than 3 days
+- Calorie intake hasn't been recorded for more than 3 days
+- Calorie intake objectives (2800kcal) streak drops below 3 days in the 7 last days
 
-- Sleep drops below 5 hours
-- No steps are recorded for the day
-- Calories burned are under 2000 kcal
 
 ---
 
 ![grafana-image](Graphics.PNG)
 
-## 🎥 Demo
+## 📦 CI/CD with GitHub Actions
 
-*Alternatively, add a link to a YouTube or Loom video here.*
+This project uses **GitHub Actions** to deploy and restart Airflow automatically on every push to the `main` branch.
+
+### ✅ Deployment Workflow
+
+1. **SSH into Azure VM** using a private key from GitHub secrets
+2. **Copy updated project files** including `.env` and `airflow_conns.json`
+3. **Restart Docker containers** using `docker-compose down && docker-compose up -d`
+4. **Verify deployment** using container health check (`docker ps`)
+
+### 🔐 Required GitHub Secrets
+
+| Secret Name              | Purpose                                 |
+|--------------------------|-----------------------------------------|
+| `VM_SSH_KEY`             | SSH private key for the Azure VM        |
+| `GOOGLE_CLIENT_ID`       | Google Fit OAuth Client ID              |
+| `GOOGLE_CLIENT_SECRET`   | Google Fit OAuth Client Secret          |
+| `GOOGLE_REFRESH_TOKEN`   | Google Fit OAuth Refresh Token          |
+| `GMAIL_SMTP_USER`        | SMTP Email used for Grafana alerts      |
+| `GMAIL_SMTP_PASSWORD`    | Gmail App Password                      |
+| `AIRFLOW_CONNS`          | JSON file of Airflow connections        |
 
 ---
+
+## 🔔 Slack Alerts for Airflow Failures
+
+When an Airflow task fails, a notification is automatically sent to a Slack channel using the `SlackAPIPostOperator`.
+
 
 ## 📁 Project Structure
 
@@ -169,6 +196,7 @@ Custom alerts can notify you via email (SMTP) when:
 - PostgreSQL
 - Grafana
 - Docker
+- Github Actions
 
 ---
 
