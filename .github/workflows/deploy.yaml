@@ -8,6 +8,7 @@ on:
       - "Dockerfile"
       - "docker-compose.yaml"
       - "dags/**"
+      - "grafana-storage/**"
 
 env:
   AZURE_RESOURCE_GROUP: myResourceGroup
@@ -30,7 +31,7 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $PUBLIC_IP >> ~/.ssh/known_hosts
 
@@ -55,6 +56,10 @@ jobs:
           echo "# POSTGRES CONFIGURATION" >> .env
           echo "USER_POSTGRES_USER=postgres" >> .env
           echo "USER_POSTGRES_PASSWORD=eded404" >> .env
+      
+      - name: Create airflow_conns.json file locally
+        run: |
+          echo "${{ secrets.AIRFLOW_CONNS }}" > airflow_conns.json
 
       - name: Transfer files to Azure VM
         run: |

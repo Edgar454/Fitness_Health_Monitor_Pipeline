@@ -5,3 +5,6 @@ __pycache__/
 *.log
 *.out
 .env
+id_rsa_ci
+id_rsa_ci.pub
+airflow_conns.json
