@@ -104,17 +104,20 @@ Running locally might not be optimal due to resource constraints. You’ll need:
 
 To run in the cloud (e.g., on an **Azure VM**):
 
-1. SSH into your VM
-2. Clone this repository
+1. Clone this repository
+2. Open bash at the base and make sure you have azure cli installed
 3. Run the provisioning script:
 
 ```bash
 ./cloud.sh
 ```
+This will define the VM , open the ports and gice you your PUBLIC_IP then :
 
 4. Either:
    - Use `docker.sh` for a full setup
    - Or manually set `$AIRFLOW_HOME`, navigate to the `airflow/` folder and follow local Docker steps
+
+Head over http:/<PUBLIC_IP>:8080 to access the AIrflow UI and http:/<PUBLIC_IP>:3000 to access the grafana UI
 
 ---
 
@@ -131,9 +134,11 @@ Custom alerts can notify you via email (SMTP) when:
 
 - Sleep drops below 5 hours
 - No steps are recorded for the day
-- Calories burned are under your set threshold
+- Calories burned are under 2000 kcal
 
 ---
+
+![grafana-image](Graphics.PNG)
 
 ## 🎥 Demo
 
@@ -144,11 +149,9 @@ Custom alerts can notify you via email (SMTP) when:
 ## 📁 Project Structure
 
 ```
-.
-├── airflow/                # DAGs, plugins, and config for Airflow
 ├── dags/                   # Python DAG definition
-├── data/                   # Sample or fetched data
-├── notebooks/              # Jupyter notebooks for EDA
+   ├── fitness_api_etl/                   # Contains data fetchning a validation course
+      ├── data/                   # Sample or fetched data
 ├── docker-compose.yml      # Docker configuration
 ├── cloud.sh                # Script to set up cloud VM
 ├── .env                    # Environment variables (not committed)
@@ -173,5 +176,5 @@ Custom alerts can notify you via email (SMTP) when:
 
 Have questions or want to collaborate?
 
-**[Your Name]** – [[your.email@example.com](mailto:your.email@example.com)]\
-GitHub: [@yourusername](https://github.com/yourusername)
+**Edgar Meva'a** – [mevaed4@mail.com](mailto:mevaed4@mail.com)
+

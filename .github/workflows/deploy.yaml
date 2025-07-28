@@ -4,9 +4,9 @@ on:
   push:
     branches: [ "main" ]
   paths:
-      - 'Dockerfile'
-      - 'docker-compose.yaml'
-      - 'dags/**'
+    - 'Dockerfile'
+    - 'docker-compose.yaml'
+    - 'dags/**'
 
 env:
   AZURE_RESOURCE_GROUP: myResourceGroup
@@ -35,27 +35,25 @@ jobs:
 
       - name: Create .env file locally
         run: |
-          cat <<EOF > .env
-# AIRFLOW RELATED VARIABLES
-AIRFLOW_UID=50000
-AIRFLOW_IMAGE_NAME=apache/airflow:3.0.1
-AIRFLOW_PROJ_DIR=.
-_AIRFLOW_WWW_USER_USERNAME=admin
-_AIRFLOW_WWW_USER_PASSWORD=admin
-
-# FITNESS API CONNECTION DETAILS
-GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
-GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
-GOOGLE_REFRESH_TOKEN=${{ secrets.GOOGLE_REFRESH_TOKEN }}
-
-# GRAFANA MAILING CONFIGURATION
-GMAIL_SMTP_USER=${{ secrets.GMAIL_SMTP_USER }}
-GMAIL_SMTP_PASSWORD=${{ secrets.GMAIL_SMTP_PASSWORD }}
-
-# POSTGRES CONFIGURATION
-USER_POSTGRES_USER=postgres
-USER_POSTGRES_PASSWORD=eded404
-EOF
+          echo "# AIRFLOW RELATED VARIABLES" > .env
+          echo "AIRFLOW_UID=50000" >> .env
+          echo "AIRFLOW_IMAGE_NAME=apache/airflow:3.0.1" >> .env
+          echo "AIRFLOW_PROJ_DIR=." >> .env
+          echo "_AIRFLOW_WWW_USER_USERNAME=admin" >> .env
+          echo "_AIRFLOW_WWW_USER_PASSWORD=admin" >> .env
+          echo "" >> .env
+          echo "# FITNESS API CONNECTION DETAILS" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "GOOGLE_REFRESH_TOKEN=${{ secrets.GOOGLE_REFRESH_TOKEN }}" >> .env
+          echo "" >> .env
+          echo "# GRAFANA MAILING CONFIGURATION" >> .env
+          echo "GMAIL_SMTP_USER=${{ secrets.GMAIL_SMTP_USER }}" >> .env
+          echo "GMAIL_SMTP_PASSWORD=${{ secrets.GMAIL_SMTP_PASSWORD }}" >> .env
+          echo "" >> .env
+          echo "# POSTGRES CONFIGURATION" >> .env
+          echo "USER_POSTGRES_USER=postgres" >> .env
+          echo "USER_POSTGRES_PASSWORD=eded404" >> .env
 
       - name: Transfer files to Azure VM
         run: |
@@ -70,4 +68,3 @@ EOF
       - name: Verify Deployment
         run: |
           ssh -o StrictHostKeyChecking=no $USERNAME@$PUBLIC_IP "docker ps"
-
