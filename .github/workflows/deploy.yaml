@@ -2,11 +2,12 @@ name: Deploy the container on Azure VM
 
 on:
   push:
-    branches: [ "main" ]
-  paths:
-    - 'Dockerfile'
-    - 'docker-compose.yaml'
-    - 'dags/**'
+    branches: 
+      - "main"
+    paths:
+      - "Dockerfile"
+      - "docker-compose.yaml"
+      - "dags/**"
 
 env:
   AZURE_RESOURCE_GROUP: myResourceGroup
